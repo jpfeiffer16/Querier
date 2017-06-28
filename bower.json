@@ -1,0 +1,21 @@
+{
+  "name": "querier",
+  "description": "",
+  "main": "app.js",
+  "authors": [
+    "Joe Pfeiffer"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^2.0.0"
+  }
+}

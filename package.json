@@ -1,0 +1,16 @@
+{
+  "name": "querier",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "./node_modules/.bin/electron  app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Joe Pfeiffer",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^1.6.11",
+    "mssql": "^4.0.4"
+  }
+}
