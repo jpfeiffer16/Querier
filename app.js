@@ -40,6 +40,7 @@ app.on('ready', () => {
   ipcMain.on('runQuery', (event, data) => {
     SqlManager.query(data.config, data.query, (result) => {
       console.log('Done. Time to reply');
+      result.columns = result.recordset.columns;
       event.sender.send('runQuery-reply', result);
     });
   });
