@@ -13,6 +13,7 @@ jQuery(document).ready(() => {
     ipcRenderer.once('runQuery-reply', (event, result) => {
       //TODO: Do stuff with the result here.
       console.dir(result);
+      renderResult($thisTab, result);
     });
 
     ipcRenderer.send('runQuery', {
@@ -27,3 +28,26 @@ jQuery(document).ready(() => {
     });
   });
 });
+
+function renderResult($tabContent, result) {
+  let $table = $tabContent.find('.results-table');
+  let $columns = $table.find('thead tr');
+  let $values = $table.find('tbody');
+
+  $columns.empty();
+  $values.empty();
+
+  Object.keys(result.columns).forEach((key) => {
+    $columns.append(`<th>${ result.columns[key].name }</th>`);
+  });
+
+  result.recordset.forEach((record) => {
+    let row = '<tr>'
+    Object.keys(record).forEach((key) => {
+      row += `<td>${ record[key] }</td>`
+    });
+    row += '</tr>'
+    $values.append(row);
+  });
+
+}

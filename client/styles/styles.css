@@ -83,3 +83,22 @@ input[type="text"]:focus {
   outline: none;
   border-bottom-color: orange;
 }
+
+
+.results {
+  background-color: whitesmoke;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  border-style: solid;
+  border-width: 3px;
+  border-color: wheat;
+  max-height: 300px;
+  max-width: 100%;
+  overflow: scroll;
+}
+
+.results-table {
+  width: 100%;
+}

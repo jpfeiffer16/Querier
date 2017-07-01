@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>Querier</title>
     <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
     <script src="client/components/jquery/dist/jquery.min.js"></script>
     <script>if (window.module) module = window.module;</script>
@@ -48,8 +48,20 @@
           <input type="text" class="password-input"/>
         </div>
       </div>
-      <textarea class="editor"></textarea>
-      <button class="run">Run</button>
+      <div class="query-editor">
+        <textarea class="editor"></textarea>
+        <button class="run">Run</button>
+      </div>
+      <div class="results">
+        <table class="results-table">
+          <thead>
+            <tr>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
     </div>
     <script src="client/client.js"></script>
   </body>
