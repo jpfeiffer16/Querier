@@ -1,32 +1,32 @@
 const { ipcRenderer } = require('electron');
 
 jQuery(document).ready(() => {
-  $('button.run').click(function() {
-    let $this = $(this);
-    let $thisTab = $this.parent().parent('.tab-content');
-    let queryValue = $thisTab.find('textarea.editor').val();
-    let username = $thisTab.find('input.username-input').val();
-    let password = $thisTab.find('input.password-input').val();
-    let servername = $thisTab.find('input.server-input').val();
-    let database = $thisTab.find('input.database-input').val();
+  // $('button.run').click(function() {
+  //   let $this = $(this);
+  //   let $thisTab = $this.parent().parent('.tab-content');
+  //   let queryValue = $thisTab.find('textarea.editor').val();
+  //   let username = $thisTab.find('input.username-input').val();
+  //   let password = $thisTab.find('input.password-input').val();
+  //   let servername = $thisTab.find('input.server-input').val();
+  //   let database = $thisTab.find('input.database-input').val();
 
-    ipcRenderer.once('runQuery-reply', (event, result) => {
-      //TODO: Do stuff with the result here.
-      console.dir(result);
-      renderResult($thisTab, result);
-    });
+  //   ipcRenderer.once('runQuery-reply', (event, result) => {
+  //     //TODO: Do stuff with the result here.
+  //     console.dir(result);
+  //     renderResult($thisTab, result);
+  //   });
 
-    ipcRenderer.send('runQuery', {
-      query: queryValue,
-      config: {
-        user: username,
-        password: password,
-        server: servername,
-        database: database,
-        port: false
-      }
-    });
-  });
+  //   ipcRenderer.send('runQuery', {
+  //     query: queryValue,
+  //     config: {
+  //       user: username,
+  //       password: password,
+  //       server: servername,
+  //       database: database,
+  //       port: false
+  //     }
+  //   });
+  // });
 });
 
 function renderResult($tabContent, result) {
@@ -49,5 +49,64 @@ function renderResult($tabContent, result) {
     row += '</tr>'
     $values.append(row);
   });
-
 }
+
+let defaultTab = {
+  name: 'Tab1',
+  active: false,
+  config: {
+    user: '',
+    password: '',
+    server: '',
+    database: '',
+    port: false
+  },
+  query: '',
+  results: {
+    columns: {},
+    recordset: []
+  }
+}
+
+let viewData = {
+  tabs: [
+    JSON.parse(JSON.stringify(defaultTab))
+  ]
+};
+
+//Setup first active tab
+viewData.tabs[0].active = true;
+
+let viewMethods = {
+  runQuery: function(tab) {
+    console.log('runQuery');
+    console.log(tab);
+    ipcRenderer.once('runQuery-reply', (event, result) => {
+      //TODO: Do stuff with the result here.
+      console.dir(result);
+      // renderResult(tab, result);
+      tab.results = result;
+    });
+
+    ipcRenderer.send('runQuery', {
+      query: tab.query,
+      config: tab.config
+    });
+  },
+  newTab: function() {
+    viewData.tabs.push(JSON.parse(JSON.stringify(defaultTab)));
+    console.log('New Tab!');
+  },
+  focusTab: function(tab) {
+    viewData.tabs.forEach((tab) => {
+      tab.active = false;
+    });
+    tab.active = true;
+  }
+};
+
+let app = new Vue({
+  el: '#app',
+  data: viewData,
+  methods: viewMethods
+})

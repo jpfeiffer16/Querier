@@ -3,66 +3,100 @@
   <head>
     <meta charset="UTF-8">
     <title>Querier</title>
-    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <script>
+      if (typeof module === 'object') {
+        window.module = module; module = undefined;
+      }
+    </script>
     <script src="client/components/jquery/dist/jquery.min.js"></script>
-    <script>if (window.module) module = window.module;</script>
+    <script>
+      if (window.module) {
+        module = window.module;
+      }
+    </script>
     <link type="text/css" rel="stylesheet" href="client/styles/styles.css" />
   </head>
   <body>
-    
-    <div class="tabs">
-      <div class="tab active" id="tab-1">
-        Tab1
+    <div id="app">
+      <div class="tabs">
+        <div
+          class="tab"
+          v-for="tab in tabs"
+          v-on:click="focusTab(tab)"
+          v-bind:class="{ active: tab.active }">
+          {{ tab.name }}
+        </div>
+        <div v-on:click="newTab()" class="tab new-tab">
+          +
+        </div>
       </div>
-      <div class="tab" id="tab-1">
-        Tab2
-      </div>
-      <div class="tab new-tab">
-        +
+      <div
+        class="tab-content"
+        v-for="tab in tabs"
+        v-bind:class="{ active: tab.active }">
+        <div class="config">
+          <div>
+            <label>
+              Server:
+            </label>
+            <input
+              type="text"
+              class="server-input"
+              v-model="tab.config.server"/>
+          </div>
+          <div>
+            <label>
+              Database:
+            </label>
+            <input
+              type="text"
+              class="database-input"
+              v-model="tab.config.database"/>
+          </div>
+          <div>
+            <label>
+              Username:
+            </label>
+            <input
+              type="text"
+              class="username-input"
+              v-model="tab.config.user"/>
+          </div>
+          <div>
+            <label>
+              Password:
+            </label>
+            <input 
+              type="text"
+              class="password-input"
+              v-model="tab.config.password"/>
+          </div>
+        </div>
+        <div class="query-editor">
+          <textarea class="editor" v-model="tab.query"></textarea>
+          <button v-on:click="runQuery(tab)" class="run">Run</button>
+        </div>
+        <div class="results">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th v-for="column in tab.results.columns">
+                  {{ column.name }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="row in tab.results.recordset">
+                <td v-for="column in row">
+                  {{ column }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-    <div id="tab-1-content" class="tab-content">
-      <div class="config">
-        <div>
-          <label>
-            Server:
-          </label>
-          <input type="text" class="server-input"/>
-        </div>
-        <div>
-          <label>
-            Database:
-          </label>
-          <input type="text" class="database-input"/>
-        </div>
-        <div>
-          <label>
-            Username:
-          </label>
-          <input type="text" class="username-input"/>
-        </div>
-        <div>
-          <label>
-            Password:
-          </label>
-          <input type="text" class="password-input"/>
-        </div>
-      </div>
-      <div class="query-editor">
-        <textarea class="editor"></textarea>
-        <button class="run">Run</button>
-      </div>
-      <div class="results">
-        <table class="results-table">
-          <thead>
-            <tr>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <script src="node_modules/vue/dist/vue.js"></script>
     <script src="client/client.js"></script>
   </body>
 </html>
