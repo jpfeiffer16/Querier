@@ -6,33 +6,50 @@
     <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
     <script src="client/components/jquery/dist/jquery.min.js"></script>
     <script>if (window.module) module = window.module;</script>
+    <link type="text/css" rel="stylesheet" href="client/styles/styles.css" />
   </head>
   <body>
     
     <div class="tabs">
-      <h3 id="tab-1">Tab1</h3>
-    </div>
-    <div class="tab-content">
-      <div id="tab-1-content">
-        <label>
-          Server:
-          <input type="text" class="server-input"/>
-        </label>
-        <label>
-          Database:
-          <input type="text" class="database-input"/>
-        </label>
-        <label>
-          Username:
-          <input type="text" class="username-input"/>
-        </label>
-        <label>
-          Password:
-          <input type="text" class="password-input"/>
-        </label>
-        <textarea class="editor"></textarea>
-        <button class="run">Run</button>
+      <div class="tab active" id="tab-1">
+        Tab1
       </div>
+      <div class="tab" id="tab-1">
+        Tab2
+      </div>
+      <div class="tab new-tab">
+        +
+      </div>
+    </div>
+    <div id="tab-1-content" class="tab-content">
+      <div class="config">
+        <div>
+          <label>
+            Server:
+          </label>
+          <input type="text" class="server-input"/>
+        </div>
+        <div>
+          <label>
+            Database:
+          </label>
+          <input type="text" class="database-input"/>
+        </div>
+        <div>
+          <label>
+            Username:
+          </label>
+          <input type="text" class="username-input"/>
+        </div>
+        <div>
+          <label>
+            Password:
+          </label>
+          <input type="text" class="password-input"/>
+        </div>
+      </div>
+      <textarea class="editor"></textarea>
+      <button class="run">Run</button>
     </div>
     <script src="client/client.js"></script>
   </body>
