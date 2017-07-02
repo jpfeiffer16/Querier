@@ -77,7 +77,8 @@
           </div>
         </div>
         <div class="query-editor">
-          <textarea class="editor" v-model="tab.query"></textarea>
+          <!--<textarea class="editor" v-model="tab.query"></textarea>-->
+          <sql-editor></sql-editor>
           <button v-on:click="runQuery(tab)" class="run">Run</button>
         </div>
         <div class="results">

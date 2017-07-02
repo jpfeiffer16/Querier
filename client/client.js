@@ -111,18 +111,24 @@ let app = new Vue({
   methods: viewMethods
 });
 
-function renderCodeEditors() {
-  let editors = document.getElementsByClassName('editor');
-  for (let i = 0; i < editors.length; i++) {
-    let editor = editors[i];
-    let thisEditor = CodeMirror.fromTextArea(editor, {
-      lineNumbers: true
-    });
-    thisEditor.on('change', () => {
-      // thisEditor.save();
-      
-    });
-  }
-}
 
-renderCodeEditors();
+Vue.component('sql-editor', {
+  template: '<div class="sql-editor"></div>'
+});
+
+// function renderCodeEditors() {
+//   let editors = document.getElementsByClassName('editor');
+//   for (let i = 0; i < editors.length; i++) {
+//     let editor = editors[i];
+//     let thisEditor = CodeMirror.fromTextArea(editor, {
+//       lineNumbers: true,
+//       mode: 'SQL'
+//     });
+//     thisEditor.on('change', () => {
+//       // thisEditor.save();
+
+//     });
+//   }
+// }
+
+// renderCodeEditors();
