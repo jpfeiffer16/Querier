@@ -19,6 +19,9 @@
       type="text/css"
       rel="stylesheet"
       href="client/components/codemirror/lib/codemirror.css" />
+    <link
+      rel="stylesheet"
+      href="client/components/codemirror/addon/hint/show-hint.css" />
   </head>
   <body>
     <div id="app">
@@ -29,6 +32,7 @@
           v-on:click="focusTab(tab)"
           v-bind:class="{ active: tab.active }">
           {{ tab.name }}
+          <span v-on:click="closeTab(tab)" class="tab-close-button">x</span>
         </div>
         <div v-on:click="newTab()" class="tab new-tab">
           +
@@ -71,19 +75,20 @@
               Password:
             </label>
             <input 
-              type="text"
+              type="password"
               class="password-input"
               v-model="tab.config.password"/>
           </div>
         </div>
         <div class="query-editor">
-          <!--<textarea class="editor" v-model="tab.query"></textarea>-->
-          <sql-editor v-model="tab.query"></sql-editor>
-          <!--<param-demo size="100" my-message="hello!"></param-demo>-->
+          <sql-editor v-on:run="runQuery(tab)" v-model="tab.query">
+          </sql-editor>
           <button v-on:click="runQuery(tab)" class="run">Run</button>
         </div>
         <div class="results">
-          <table class="results-table">
+          <results-grid v-bind:table="table" v-for="table in tab.results">
+          </results-grid>
+          <!--<table class="results-table">
             <thead>
               <tr>
                 <th v-for="column in tab.results.columns">
@@ -98,12 +103,23 @@
                 </td>
               </tr>
             </tbody>
-          </table>
+          </table>-->
         </div>
       </div>
     </div>
-    <script src="client/components/codemirror/lib/codemirror.js"></script>
-    <script src="node_modules/vue/dist/vue.js"></script>
-    <script src="client/client.js"></script>
+    <script
+      src="client/components/codemirror/lib/codemirror.js"></script>
+    <script
+      src="client/components/codemirror/addon/hint/show-hint.js"></script>
+    <script
+      src="client/components/codemirror/addon/hint/sql-hint.js"></script>
+    <script
+      src="client/components/codemirror/mode/sql/sql.js"></script>
+    <script
+      src="node_modules/vue/dist/vue.js"></script>
+    <script
+      src="client/scripts/resultsGrid.vue.js"></script>
+    <script
+      src="client/scripts/client.js"></script>
   </body>
 </html>

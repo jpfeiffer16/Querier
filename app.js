@@ -40,8 +40,22 @@ app.on('ready', () => {
   ipcMain.on('runQuery', (event, data) => {
     SqlManager.query(data.config, data.query, (result) => {
       console.log('Done. Time to reply');
-      result.columns = result.recordset.columns;
-      event.sender.send('runQuery-reply', result);
+      // result.columns = result.recordset.columns;
+      let tables = [];
+      result.recordsets.forEach((recordset) => {
+        let table = recordset.toTable();
+        table.rows = table.rows.map((row) => {
+          let newRow = row.map((column) => {
+            return {
+              value: column
+            }
+          });
+          return newRow;
+        });
+        tables.push(table);
+      });
+
+      event.sender.send('runQuery-reply', tables);
     });
   });
 });
