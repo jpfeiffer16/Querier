@@ -105,16 +105,44 @@ let viewMethods = {
   }
 };
 
-let app = new Vue({
-  el: '#app',
-  data: viewData,
-  methods: viewMethods
-});
 
 
 Vue.component('sql-editor', {
-  template: '<div class="sql-editor"></div>'
+  data: function() {
+    return {
+      content: ''
+    }
+  },
+  template: '<div class="sql-editor"></div>',
+  mounted: function(e) {
+    let self = this;
+    console.log('Created');
+    console.log(this);
+    // setTimeout(() => {
+    // Vue.nextTick(function() {
+      let editor = CodeMirror(this.$el, {
+        lineNumbers: true
+      });
+      editor.on('change', function(cm) {
+        self.content = cm.getValue()
+      });
+      if (!!self.$emit) {
+        self.$emit('change', self.content)
+        self.$emit('input', self.content)
+      }
+      // console.log(editor);
+    // });
+    // });
+  }
 });
+
+// Vue.component('param-demo', {
+//   props: ['size', 'myMessage'], // simple syntax
+//   compiled: function () {
+//     console.log(this.size)    // -> 100
+//     console.log(this.myMessage) // -> 'hello!'
+//   }
+// })
 
 // function renderCodeEditors() {
 //   let editors = document.getElementsByClassName('editor');
@@ -132,3 +160,9 @@ Vue.component('sql-editor', {
 // }
 
 // renderCodeEditors();
+
+let app = new Vue({
+  el: '#app',
+  data: viewData,
+  methods: viewMethods
+});

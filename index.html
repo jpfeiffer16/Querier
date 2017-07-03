@@ -78,7 +78,8 @@
         </div>
         <div class="query-editor">
           <!--<textarea class="editor" v-model="tab.query"></textarea>-->
-          <sql-editor></sql-editor>
+          <sql-editor v-model="tab.query"></sql-editor>
+          <!--<param-demo size="100" my-message="hello!"></param-demo>-->
           <button v-on:click="runQuery(tab)" class="run">Run</button>
         </div>
         <div class="results">
