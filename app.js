@@ -10,7 +10,7 @@ let win
 
 function createWindow () {
   // Create the browser window.
-  win = new BrowserWindow({width: 800, height: 600});
+  win = new BrowserWindow({width: 1200, height: 850});
 
   // and load the index.html of the app.
   win.loadURL(url.format({
@@ -47,7 +47,8 @@ app.on('ready', () => {
         table.rows = table.rows.map((row) => {
           let newRow = row.map((column) => {
             return {
-              value: column
+              value: column,
+              active: false
             }
           });
           return newRow;

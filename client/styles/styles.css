@@ -13,6 +13,18 @@ body {
   padding: 5px;
 }
 
+.hidden {
+  display: none;
+}
+
+.hidden-input {
+  width: 0;
+  height: 0;
+  opacity: 0;
+  z-index: 0;
+  position: absolute;
+}
+
 .tab-content:not(.active) {
   display: none;
 }
