@@ -9,6 +9,7 @@ Vue.component('results-grid', {
         v-on:keydown="keypress" />
       <thead>
         <tr>
+          <th class="col-index-header"></th>
           <th
             v-for="(column, index) in table.columns"
             v-on:click="selectColumn(index)">
@@ -18,6 +19,11 @@ Vue.component('results-grid', {
       </thead>
       <tbody>
         <tr v-for="(row, rowIndex) in table.rows">
+          <td
+            v-on:click="selectRow(rowIndex)"
+            class="col-index">
+            {{ rowIndex }}
+          </td>
           <td
             v-bind:class="{ active: column.active }"
             v-on:click="toggleActive(rowIndex, columnIndex)"
@@ -44,6 +50,11 @@ Vue.component('results-grid', {
         row[index].active = true;
       });
       this.focusInput();
+    },
+    selectRow: function(rowIndex) {
+      this.table.rows[rowIndex].forEach((column) => {
+        column.active = true;
+      });
     },
     focusInput: function() {
       // console.log(this);
