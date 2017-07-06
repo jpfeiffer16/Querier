@@ -86,8 +86,50 @@
           <button v-on:click="runQuery(tab)" class="run">Run</button>
         </div>
         <div class="results">
-          <results-grid v-bind:table="table" v-for="table in tab.results">
-          </results-grid>
+          <div class="tabs">
+            <div
+              v-on:click="tab.resultViewTab = 'tables'"
+              v-bind:class="{ active: tab.resultViewTab == 'tables' }"
+              v-if="tab.results.tables.length > 0"
+              class="tab">
+              Results
+            </div>
+            <div
+              v-on:click="tab.resultViewTab = 'messages'"
+              v-bind:class="{ active: tab.resultViewTab == 'messages' }"
+              v-if="tab.results.rowsAffected.length > 0 || tab.results.error != null"
+              class="tab">
+              Messages
+            </div>
+          </div>
+          <div
+            v-bind:class="{ active: tab.resultViewTab == 'tables' }"
+            v-if="tab.results.tables.length > 0"
+            class="results-viewer tab-content">
+            <results-grid v-bind:table="table" v-for="table in tab.results.tables">
+            </results-grid>
+          </div>
+          <div
+            v-bind:class="{ active: tab.resultViewTab == 'messages' }"
+            class="tab-content">
+            <p
+              v-for="affectedRowNumber in tab.results.rowsAffected"
+              class="message">
+              ({{ affectedRowNumber }}) Rows affected
+            </p>
+            <p v-if="tab.results.error != null" class="error">
+              <span>
+                Msg {{ tab.results.error.originalError.info.number }},
+                Level {{ tab.results.error.originalError.info.class }}, 
+                State {{ tab.results.error.originalError.info.state }}, 
+                Line {{ tab.results.error.originalError.info.lineNumber }}
+              </span>
+              <br>
+              <span>
+                {{ tab.results.error.originalError.info.message }}
+              </span>
+            </p>
+          </div>
         </div>
       </div>
     </div>

@@ -38,25 +38,31 @@ app.on('ready', () => {
   createWindow();
   //NOTE: Custom stuff here.
   ipcMain.on('runQuery', (event, data) => {
-    SqlManager.query(data.config, data.query, (result) => {
+    SqlManager.query(data.config, data.query, (err, result) => {
       console.log('Done. Time to reply');
       // result.columns = result.recordset.columns;
       let tables = [];
-      result.recordsets.forEach((recordset) => {
-        let table = recordset.toTable();
-        table.rows = table.rows.map((row) => {
-          let newRow = row.map((column) => {
-            return {
-              value: column,
-              active: false
-            }
+      if (!err) {
+        result.recordsets.forEach((recordset) => {
+          let table = recordset.toTable();
+          table.rows = table.rows.map((row) => {
+            let newRow = row.map((column) => {
+              return {
+                value: column,
+                active: false
+              }
+            });
+            return newRow;
           });
-          return newRow;
+          tables.push(table);
         });
-        tables.push(table);
+      }
+      console.log('Sending');
+      event.sender.send('runQuery-reply', {
+        error: err,
+        tables,
+        rowsAffected: result != null ? result.rowsAffected : 0
       });
-
-      event.sender.send('runQuery-reply', tables);
     });
   });
 });

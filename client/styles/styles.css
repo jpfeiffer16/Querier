@@ -112,16 +112,19 @@ input[type="text"]:focus, input[type="password"]:focus {
   border-bottom-color: orange;
 }
 
-
 .results {
+  margin-top: 30px;
+}
+
+.results-viewer {
   background-color: whitesmoke;
-  position: absolute;
+  /*position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
   border-style: solid;
   border-width: 3px;
-  border-color: wheat;
+  border-color: wheat;*/
   max-height: 300px;
   max-width: 100%;
   overflow: scroll;
@@ -144,7 +147,7 @@ input[type="text"]:focus, input[type="password"]:focus {
 }
 
 .results-table td, .results-table th:hover {
-  cursor: pointer;
+  cursor: cell;
 }
 
 .results-table td.active {

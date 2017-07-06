@@ -64,8 +64,13 @@ module.exports = (function() {
   function runQuery(pool, query, cb) {
     pool.request()
       .query(query)
-      .then(cb)
+      .then((result) =>{ 
+        console.log('Cb called');
+        cb(null, result);
+      })
       .catch((err) => {
+        cb(err, null);
+        console.log('errored');
         console.error(err);
       });
   }

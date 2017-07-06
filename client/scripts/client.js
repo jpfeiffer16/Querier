@@ -34,7 +34,12 @@ let defaultTab = {
     port: false
   },
   query: '',
-  results: []
+  results: {
+    tables: [],
+    rowsAffected: 0,
+    error: null
+  },
+  resultViewTab: 'tables'
 }
 
 let viewData = {
@@ -52,7 +57,13 @@ let viewMethods = {
     console.log(tab);
     ipcRenderer.once('runQuery-reply', (event, result) => {
       console.dir(result);
+      //NOTE: Temporarily disabled
       tab.results = result;
+      if (result.error != null) {
+        tab.resultViewTab = 'messages';
+      } else {
+        tab.resultViewTab = 'tables';
+      }
     });
 
     ipcRenderer.send('runQuery', {
