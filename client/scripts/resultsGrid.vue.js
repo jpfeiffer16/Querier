@@ -72,7 +72,7 @@ Vue.component('results-grid', {
       hiddenInput.focus();
     },
     keypress: function(e) {
-      console.log(e);
+      // console.log(e);
       if (e.key == 'Escape') {
         e.srcElement.blur();
         //De-select all
