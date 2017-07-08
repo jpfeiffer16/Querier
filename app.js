@@ -20,7 +20,7 @@ function createWindow () {
   }));
 
   // Open the DevTools.
-  // win.webContents.openDevTools();
+  win.webContents.openDevTools();
 
   // Emitted when the window is closed.
   win.on('closed', () => {
@@ -35,6 +35,7 @@ function createWindow () {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
+  BrowserWindow.addDevToolsExtension('node_modules/vue-devtools')
   createWindow();
   //NOTE: Custom stuff here.
   ipcMain.on('runQuery', (event, data) => {

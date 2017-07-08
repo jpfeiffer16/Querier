@@ -10,11 +10,16 @@ Vue.component('results-grid', {
       <thead>
         <tr>
           <th class="col-index-header"></th>
-          <th
-            v-for="(column, index) in table.columns"
-            v-on:click="selectColumn(index)">
-            {{ column.name }}
-          </th>
+          <template v-for="(column, index) in table.columns">
+            <th
+              v-bind:style="{ width: column.width + 'px' }"
+              v-on:click="selectColumn(index)">
+              <span
+                v-on:mousedown="beginResize($event, column)"
+                class="col-resizer"></span>
+              {{ column.name }}
+            </th>
+          </template>
         </tr>
       </thead>
       <tbody>
@@ -117,6 +122,38 @@ Vue.component('results-grid', {
           });
         });
       }
+    },
+    beginResize: function(e, column) {
+      // if (!column.width) {
+      //   column.width = 150;
+      // }
+      columnOriginalWidth = column.width || 150;
+
+      let currentX = originalX = e.pageX;
+      let interFunc = function(ev) {
+        document.removeEventListener('mouseup', interFunc);
+        document.removeEventListener('mousemove', movFunc);
+        self.endResize(ev);
+      };
+      let movFunc = function(ev) {
+        console.log(ev);
+        currentX = ev.pageX;
+        // column.width = columnOriginalWidth + (currentX - originalX);
+        self.table.columns.filter((col) => {
+          return col === column;
+        })[0].width = columnOriginalWidth + (currentX - originalX);
+        console.log(column.width);
+      }
+
+      let self = this;
+      console.log('beginResize');
+      console.log(e);
+      document.addEventListener('mouseup', interFunc);
+      document.addEventListener('mousemove', movFunc);
+    },
+    endResize: function(e) {
+      console.log('endResize');
+      console.log(e);
     }
   }
 });

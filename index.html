@@ -106,7 +106,9 @@
             v-bind:class="{ active: tab.resultViewTab == 'tables' }"
             v-if="tab.results.tables.length > 0"
             class="results-viewer tab-content">
-            <results-grid v-bind:table="table" v-for="table in tab.results.tables">
+            <results-grid 
+              v-bind:table="table"
+              v-for="table in tab.results.tables">
             </results-grid>
           </div>
           <div
