@@ -12,11 +12,10 @@ Vue.component('results-grid', {
           <th class="col-index-header"></th>
           <template v-for="(column, index) in table.columns">
             <th
+              v-resize
               v-bind:style="{ width: column.width + 'px' }"
+              v-bind:shit="column.width"
               v-on:click="selectColumn(index)">
-              <span
-                v-on:mousedown="beginResize($event, column)"
-                class="col-resizer"></span>
               {{ column.name }}
             </th>
           </template>
@@ -134,6 +133,14 @@ Vue.component('results-grid', {
         document.removeEventListener('mouseup', interFunc);
         document.removeEventListener('mousemove', movFunc);
         self.endResize(ev);
+
+        let cols = self.table.columns.filter((col) => {
+          return col === column;
+        });
+
+        // setInterval(function() {
+          cols[0].width += 10;
+        // }, 300);
       };
       let movFunc = function(ev) {
         console.log(ev);

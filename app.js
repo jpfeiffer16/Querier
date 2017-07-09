@@ -2,6 +2,8 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const url = require('url');
 let SqlManager = require('./modules/sqlManager');
+//Get configs
+require('dotenv').config();
 
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -11,6 +13,7 @@ let win
 function createWindow () {
   // Create the browser window.
   win = new BrowserWindow({width: 1200, height: 850});
+  win.setMenu(null);
 
   // and load the index.html of the app.
   win.loadURL(url.format({
@@ -20,8 +23,10 @@ function createWindow () {
   }));
 
   // Open the DevTools.
-  win.webContents.openDevTools();
-
+  if (process.env.SHOW_DEVTOOLS == 'true')
+  {
+    win.webContents.openDevTools();
+  }
   // Emitted when the window is closed.
   win.on('closed', () => {
     // Dereference the window object, usually you would store windows
@@ -35,10 +40,50 @@ function createWindow () {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
+  //Add vue debugging tools.
   BrowserWindow.addDevToolsExtension('node_modules/vue-devtools')
   createWindow();
   //NOTE: Custom stuff here.
   ipcMain.on('runQuery', (event, data) => {
+    if (process.env.TEST_DATA == 'true') {
+      console.log('Sending');
+      event.sender.send('runQuery-reply', {
+        error: null,
+        tables: [
+          {
+            columns: [
+              {
+                name: 'Test1'
+              },
+              {
+                name: 'Test2'
+              },
+              {
+                name: 'Test2'
+              }
+            ],
+            rows: [
+                [
+                  {
+                    value: 'Test1',
+                    active: false
+                  },
+                  {
+                    value: 'Test1',
+                    active: false
+                  },
+                  {
+                    value: 'Test1',
+                    active: false
+                  },
+                ]
+            ]
+          }
+        ],
+        rowsAffected: 3
+      });
+      return;
+    }
     SqlManager.query(data.config, data.query, (err, result) => {
       console.log('Done. Time to reply');
       // result.columns = result.recordset.columns;
@@ -50,7 +95,8 @@ app.on('ready', () => {
             let newRow = row.map((column) => {
               return {
                 value: column,
-                active: false
+                active: false,
+                width: 150
               }
             });
             return newRow;
