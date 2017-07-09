@@ -12,11 +12,11 @@ Vue.component('results-grid', {
           <th class="col-index-header"></th>
           <template v-for="(column, index) in table.columns">
             <th
-              v-resize
               v-bind:style="{ width: column.width + 'px' }"
               v-bind:shit="column.width"
               v-on:click="selectColumn(index)">
               {{ column.name }}
+              <!--<span class="resizer"></span>-->
             </th>
           </template>
         </tr>
