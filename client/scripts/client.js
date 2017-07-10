@@ -27,10 +27,10 @@ let defaultTab = {
   name: 'SQLQuery',
   active: false,
   config: {
-    user: 'wf_usr ',
-    password: 'Rv7zEC06qlFZcTvesBjx',
-    server: '54.183.35.201',
-    database: 'workfront_hours',
+    user: ' ',
+    password: '',
+    server: '',
+    database: '',
     port: false
   },
   query: '',

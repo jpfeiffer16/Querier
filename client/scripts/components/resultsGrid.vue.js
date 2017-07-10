@@ -14,7 +14,7 @@ Vue.component('results-grid', {
             <th
               v-bind:style="{ width: column.width + 'px' }"
               v-bind:shit="column.width"
-              v-on:click="selectColumn(index)">
+              v-on:dblclick="selectColumn(index)">
               {{ column.name }}
               <!--<span class="resizer"></span>-->
             </th>
@@ -30,7 +30,7 @@ Vue.component('results-grid', {
           </td>
           <td
             v-bind:class="{ active: column.active }"
-            v-on:click="toggleActive(rowIndex, columnIndex)"
+            v-on:dblclick="toggleActive(rowIndex, columnIndex)"
             v-for="(column, columnIndex) in row">
             {{ column.value }}
           </td>

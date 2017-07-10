@@ -6,6 +6,8 @@ fi
 
 rm build/* -r
 
+cp .env-prod .env
+
 ./node_modules/.bin/electron-packager ./ --platform linux --arch x64 --icon images/icon.png --out build/
 ./node_modules/.bin/electron-packager ./ --platform darwin --arch x64 --icon images/icon.png --out build/
 ./node_modules/.bin/electron-packager ./ --platform win32 --arch x64 --icon images/icon.png --out build/
