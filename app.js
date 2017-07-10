@@ -45,7 +45,9 @@ function createWindow () {
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
   //Add vue debugging tools.
-  BrowserWindow.addDevToolsExtension('node_modules/vue-devtools')
+  if (process.env.LOAD_VUE_DEVTOOLS == 'true') {
+    BrowserWindow.addDevToolsExtension('node_modules/vue-devtools')
+  }
   createWindow();
   //NOTE: Custom stuff here.
   ipcMain.on('runQuery', (event, data) => {
