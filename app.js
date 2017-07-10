@@ -10,9 +10,13 @@ require('dotenv').config();
 // be closed automatically when the JavaScript object is garbage collected.
 let win
 
+const iconPath = path.normalize(
+  path.join(__dirname, 'client/images','icon.png')
+);
+
 function createWindow () {
   // Create the browser window.
-  win = new BrowserWindow({width: 1200, height: 850});
+  win = new BrowserWindow({width: 1200, height: 850, icon: iconPath});
   win.setMenu(null);
 
   // and load the index.html of the app.
