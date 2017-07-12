@@ -1,28 +1,5 @@
 const { ipcRenderer } = require('electron');
 
-//TODO: This goes next
-function renderResult($tabContent, result) {
-  let $table = $tabContent.find('.results-table');
-  let $columns = $table.find('thead tr');
-  let $values = $table.find('tbody');
-
-  $columns.empty();
-  $values.empty();
-
-  Object.keys(result.columns).forEach((key) => {
-    $columns.append(`<th>${ result.columns[key].name }</th>`);
-  });
-
-  result.recordset.forEach((record) => {
-    let row = '<tr>'
-    Object.keys(record).forEach((key) => {
-      row += `<td>${ record[key] }</td>`
-    });
-    row += '</tr>'
-    $values.append(row);
-  });
-}
-
 let defaultTab = {
   name: 'SQLQuery',
   active: false,
@@ -57,7 +34,6 @@ let viewMethods = {
     console.log(tab);
     ipcRenderer.once('runQuery-reply', (event, result) => {
       console.dir(result);
-      //NOTE: Temporarily disabled
       tab.results = result;
       if (result.error != null) {
         tab.resultViewTab = 'messages';
@@ -107,15 +83,13 @@ Vue.component('sql-editor', {
       this.$emit('input', this.internalValue);
     }
   },
-  mounted: function(e) {
+  mounted: function() {
     let self = this;
     console.log('Created');
     console.log(this);
     setTimeout(() => {
-    // Vue.nextTick(function() {
       let editor = CodeMirror(this.$el, {
         mode: 'text/x-mssql',
-        // indentWithTabs: true,
         smartIndent: true,
         lineNumbers: true,
         matchBrackets : true,
@@ -139,7 +113,6 @@ Vue.component('sql-editor', {
         }
       });
     });
-    // });
   },
   created: function() {
     this.internalValue = this.value;

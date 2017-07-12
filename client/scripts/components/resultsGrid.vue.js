@@ -13,7 +13,6 @@ Vue.component('results-grid', {
           <template v-for="(column, index) in table.columns">
             <th
               v-bind:style="{ width: column.width + 'px' }"
-              v-bind:shit="column.width"
               v-on:dblclick="selectColumn(index)">
               {{ column.name }}
               <!--<span class="resizer"></span>-->
@@ -24,13 +23,13 @@ Vue.component('results-grid', {
       <tbody>
         <tr v-for="(row, rowIndex) in table.rows">
           <td
-            v-on:click="selectRow(rowIndex)"
+            v-on:dblclick="selectRow(rowIndex)"
             class="col-index">
             {{ rowIndex }}
           </td>
           <td
             v-bind:class="{ active: column.active }"
-            v-on:dblclick="toggleActive(rowIndex, columnIndex)"
+            v-on:click="toggleActive(rowIndex, columnIndex)"
             v-for="(column, columnIndex) in row">
             {{ column.value }}
           </td>
@@ -42,6 +41,11 @@ Vue.component('results-grid', {
   mounted: function() {
     console.log('Results View is Mounted');
     console.log(this);
+    Array
+      .from(this.$el.getElementsByTagName('th'))
+      .forEach((el) => {
+        el.style.width = el.clientWidth + 'px';
+      });
   },
   methods: {
     toggleActive: function(rowIndex, columIndex) {
@@ -61,7 +65,6 @@ Vue.component('results-grid', {
       });
     },
     focusInput: function() {
-      // console.log(this);
       let hiddenInput = Array.from(this.$el.children).filter((child) => {
         return (
           child.tagName.toLowerCase() == 'input' &&
@@ -122,45 +125,5 @@ Vue.component('results-grid', {
         });
       }
     },
-    beginResize: function(e, column) {
-      // if (!column.width) {
-      //   column.width = 150;
-      // }
-      columnOriginalWidth = column.width || 150;
-
-      let currentX = originalX = e.pageX;
-      let interFunc = function(ev) {
-        document.removeEventListener('mouseup', interFunc);
-        document.removeEventListener('mousemove', movFunc);
-        self.endResize(ev);
-
-        let cols = self.table.columns.filter((col) => {
-          return col === column;
-        });
-
-        // setInterval(function() {
-          cols[0].width += 10;
-        // }, 300);
-      };
-      let movFunc = function(ev) {
-        console.log(ev);
-        currentX = ev.pageX;
-        // column.width = columnOriginalWidth + (currentX - originalX);
-        self.table.columns.filter((col) => {
-          return col === column;
-        })[0].width = columnOriginalWidth + (currentX - originalX);
-        console.log(column.width);
-      }
-
-      let self = this;
-      console.log('beginResize');
-      console.log(e);
-      document.addEventListener('mouseup', interFunc);
-      document.addEventListener('mousemove', movFunc);
-    },
-    endResize: function(e) {
-      console.log('endResize');
-      console.log(e);
-    }
   }
 });

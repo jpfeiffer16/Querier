@@ -1,5 +1,3 @@
-const { fork, spawn, exec } = require('child_process');
-const fs = require('fs');
 const sql = require('mssql');
 
 module.exports = (function() {
@@ -9,8 +7,14 @@ module.exports = (function() {
 
     let pool = getPool(config);
     if (pool == null) {
-      createPool(config, (pool) => {
-        runQuery(pool, query, cb);
+      createPool(config, (err, pool) => {
+        if (err) {
+          cb({
+            error: err.error
+          });
+        } else {
+          runQuery(pool, query, cb);
+        }
       });
     } else {
       runQuery(pool, query, cb);
@@ -21,6 +25,7 @@ module.exports = (function() {
     let pool = new sql.ConnectionPool(JSON.parse(JSON.stringify(config)));
     pool.connect((err) => {
       if (err) {
+        cb(err, null);
         console.error(err);
         //Remove the item from the array.
         // poolCollection.forEach((item, index) => {
@@ -35,7 +40,7 @@ module.exports = (function() {
         
         return;
       }
-      cb(pool);
+      cb(null, pool);
     });
     poolCollection.push({
       config: config,

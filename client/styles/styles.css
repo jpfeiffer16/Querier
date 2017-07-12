@@ -81,21 +81,12 @@ body {
 
 .config label {
   display: inline-block;
-  /*float: left;
-  clear: left;*/
   width: 100px;
   text-align: left;
 }
 
-.config input {
-  /*display: inline-block;*/
-  /*float: left;*/
-}
-
 .editor {
   width: 100%;
-  /*max-width: 100%;
-  min-width: 100%;*/
   resize: none;
 }
 
@@ -123,13 +114,6 @@ input[type="text"]:focus, input[type="password"]:focus {
 
 .results-viewer {
   background-color: whitesmoke;
-  /*position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  border-style: solid;
-  border-width: 3px;
-  border-color: wheat;*/
   max-height: 300px;
   max-width: 100%;
   overflow: scroll;
@@ -141,8 +125,6 @@ input[type="text"]:focus, input[type="password"]:focus {
 }
 
 .results-table td, .results-table th {
-  /*max-width: 151px; */
-  width: 151px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -167,6 +149,7 @@ input[type="text"]:focus, input[type="password"]:focus {
   resize: horizontal;
 }
 
-.col-index, .col-index-header {
+th.col-index, th.col-index-header {
   width: 30px;
+  resize: none;
 }

@@ -119,18 +119,25 @@
               class="message">
               ({{ affectedRowNumber }}) Rows affected
             </p>
-            <p v-if="tab.results.error != null" class="error">
-              <span>
-                Msg {{ tab.results.error.originalError.info.number }},
-                Level {{ tab.results.error.originalError.info.class }}, 
-                State {{ tab.results.error.originalError.info.state }}, 
-                Line {{ tab.results.error.originalError.info.lineNumber }}
-              </span>
-              <br>
-              <span>
-                {{ tab.results.error.originalError.info.message }}
-              </span>
-            </p>
+            <template v-if="tab.results.error != null">
+              <p v-if="tab.results.error.code != 'ESOCKET'" class="error">
+                <span>
+                  Msg {{ tab.results.error.originalError.info.number }},
+                  Level {{ tab.results.error.originalError.info.class }}, 
+                  State {{ tab.results.error.originalError.info.state }}, 
+                  Line {{ tab.results.error.originalError.info.lineNumber }}
+                </span>
+                <br>
+                <span>
+                  {{ tab.results.error.originalError.info.message }}
+                </span>
+              </p>
+              <p v-if="tab.results.error.error.code == 'ESOCKET'" class="error">
+                <span>
+                  {{ tab.results.error.error.originalError.message }}
+                </span>
+              </p>
+            </template>
           </div>
         </div>
       </div>
