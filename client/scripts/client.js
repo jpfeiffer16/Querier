@@ -4,7 +4,7 @@ let defaultTab = {
   name: 'SQLQuery',
   active: false,
   config: {
-    user: ' ',
+    user: '',
     password: '',
     server: '',
     database: '',
