@@ -55,37 +55,7 @@ app.on('ready', () => {
       console.log('Sending');
       event.sender.send('runQuery-reply', {
         error: null,
-        tables: [
-          {
-            columns: [
-              {
-                name: 'Test1'
-              },
-              {
-                name: 'Test2'
-              },
-              {
-                name: 'Test2'
-              }
-            ],
-            rows: [
-                [
-                  {
-                    value: 'Test1',
-                    active: false
-                  },
-                  {
-                    value: 'Test1',
-                    active: false
-                  },
-                  {
-                    value: 'Test1',
-                    active: false
-                  },
-                ]
-            ]
-          }
-        ],
+        tables: require('./test_data/testdata.json'),
         rowsAffected: 3
       });
       return;

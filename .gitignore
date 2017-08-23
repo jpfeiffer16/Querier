@@ -3,3 +3,4 @@ node_modules/
 client/components/
 build/
 .env
+test_data/testdata.json
