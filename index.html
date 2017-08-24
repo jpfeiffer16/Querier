@@ -97,7 +97,8 @@
             <div
               v-on:click="tab.resultViewTab = 'messages'"
               v-bind:class="{ active: tab.resultViewTab == 'messages' }"
-              v-if="tab.results.rowsAffected.length > 0 || tab.results.error != null"
+              v-if=
+                "tab.results.rowsAffected.length > 0 || tab.results.error != null"
               class="tab">
               Messages
             </div>

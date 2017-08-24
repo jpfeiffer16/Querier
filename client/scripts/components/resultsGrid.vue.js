@@ -1,3 +1,4 @@
+const MIN_CELL_WIDTH = 100;
 const {clipboard} = require('electron');
 
 Vue.component('results-grid', {
@@ -44,7 +45,17 @@ Vue.component('results-grid', {
     Array
       .from(this.$el.getElementsByTagName('th'))
       .forEach((el) => {
-        el.style.width = el.clientWidth + 'px';
+        if (
+          el.classList == undefined || 
+          (
+            !~Array.from(el.classList).indexOf('col-index') &&
+            !~Array.from(el.classList).indexOf('col-index-header')
+          )
+        ) {
+          el.style.width = el.clientWidth > 100 ?
+            el.clientWidth + 'px' :
+            MIN_CELL_WIDTH + 'px';
+        }
       });
   },
   methods: {
