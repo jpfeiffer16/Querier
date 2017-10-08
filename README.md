@@ -1,5 +1,6 @@
 # Querier
 Cross-Platform tool to query MSSQLSERVER.
+![Querier Screenshot](/client/images/screenshots/Querier1.png)
 
 ## Installing
 
