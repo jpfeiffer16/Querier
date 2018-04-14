@@ -5,7 +5,7 @@ Cross-Platform tool to query MSSQLSERVER.
 ## Installing
 
 ### Pre-Packaged
-Head on over to the [releases page](https://github.com/jpfeiffer16/Querier/releases) and get download the latest version for your OS.
+Head on over to the [releases page](https://github.com/jpfeiffer16/Querier/releases) and download the latest version for your OS.
 
 ### From Github
 
